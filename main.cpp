@@ -134,6 +134,10 @@ int main(int argc, char* argv[]) {
       std::cout << "OPTIONS: " << std::endl;
       std::cout << "\t-h, --help: Output this text" << std::endl;
       std::cout << "\t-c, --color: Color of output" << std::endl;
+      std::cout << "\t-v, --version: print version" << std::endl;
+      return 0;
+    } else if (param == "-v" || param == "--version") {
+      std::cout << "randLog v1.0" << std::endl;
       return 0;
     } else {
       std::cerr << "Unknown option: " << param << std::endl;
