@@ -1,0 +1,18 @@
+device (p2p-dev-wlan0): supplicant management interface state: disconnected 
+kernel: wlan0: authenticated
+TTY=pts/1 ; PWD=/home/user ; USER=root ; COMMAND=/usr/bin/systemctl start kernel_proc
+systemd[1]: Finished Load Kernel Module dm_mod.
+kernel: Bluetooth: hci0: API lock is enabled
+systemd[1]: Finished Virtual Console Setup.
+usb 3-10: new full-speed USB device number 3 using xhci_hcd
+e820: reserve RAM buffer [mem 0x28b800000-0x28bffffff]
+e820: reserve RAM buffer [mem 0x66800000-0x67ffffff]
+e820: reserve RAM buffer [mem 0x613ca000-0x63ffffff]
+e820: reserve RAM buffer [mem 0x5ac34018-0x5bffffff]
+pci_bus: root bus resource [mem 0x000e0000-0x000fffff window]
+kernel: smpboot: Max logical packages: 1
+x86/fpu: xstate_offset[9]: 2432, xstate_sizes[9]: 8
+BIOS FX516PE.330
+Deactivated swap Compressed Swap on /dev/zram0.
+Stopped Dispatch Password Requests to Console Directory Watch.
+rtkit-daemon[717]: Supervising 8 threads of 5 processes of 1 user(s).

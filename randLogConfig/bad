@@ -1,0 +1,14 @@
+Segmentation fault (core dumped)
+undefined reference
+double free or corruption (out)
+*** stack smashing detected ***:
+Bad file descriptor
+sudo: 3 incorrect password attempts
+Authentication is required to manage system service or unit files.
+Failed to enable unit: Access denied
+Failed to start glibc.service: Unit glibc.service not found.
+Failed to start kernel_proc.service: Unit kernel_proc.service not found.
+dhcpcd[489]: ps_bpf_recvbpf: unexpected event 0x0100
+Operator of unix-process:32865:1283581 FAILED to authenticate to gain authorization
+ACPI BIOS Error (bug): Could not resolve symbol [\_SB.PC00.LPCB.EC0.SEN2._HOT.S2HT]
+ACPI: Skipping parse of AML opcode: PowerResource (0x5B84)
