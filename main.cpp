@@ -151,7 +151,7 @@ int main(int argc, char* argv[]) {
 
   while (!_kbhit()) {
     bool current = randomBool();
-    std::cout << color << "[ " << (current ? GREEN + "OK" + color: RED + "FAIL" + color) << " ] " << (current ? goodLines[getRandom(0, goodLines.size())] : badLines[getRandom(0, badLines.size())]) << std::endl;
+    std::cout << color << "[ " << (current ? GREEN +  "OK " + color: RED + "FAIL" + color) << " ] " << (current ? goodLines[getRandom(0, goodLines.size())] : badLines[getRandom(0, badLines.size())]) << std::endl;
     sleep_ns(microSecs);
   }
 
