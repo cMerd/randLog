@@ -118,6 +118,8 @@ int main(int argc, char* argv[]) {
   const std::string goodConfigPath = getConfigPath() + "/randLog/good";
   const std::string badConfigPath = getConfigPath() + "/randLog/bad";
   unsigned long long microSecs = 500000000;
+  bool limited = false;
+  long long logCount = 1;
 
   for (int i = 1; i < argc; i++) {
     std::string param = argv[i];
@@ -134,11 +136,21 @@ int main(int argc, char* argv[]) {
       std::cout << "OPTIONS: " << std::endl;
       std::cout << "\t-h, --help: Output this text" << std::endl;
       std::cout << "\t-c, --color: Color of output" << std::endl;
-      std::cout << "\t-v, --version: print version" << std::endl;
+      std::cout << "\t-v, --version: Print version" << std::endl;
+      std::cout << "\t-n, --count: Number of logs" << std::endl;
       return 0;
     } else if (param == "-v" || param == "--version") {
       std::cout << "randLog v1.0" << std::endl;
       return 0;
+    } else if (param == "-n" || param == "--count") {
+      if (i != argc - 1) {
+        limited = true;
+        logCount = std::stoi(std::string(argv[i + 1]));
+      } else {
+        std::cerr << "-n(--count) option requires a parameter" << std::endl;
+        return PARAM_ERR;
+      } 
+      i++;
     } else {
       std::cerr << "Unknown option: " << param << std::endl;
       return PARAM_ERR;
@@ -149,7 +161,7 @@ int main(int argc, char* argv[]) {
   assign(goodLines, goodConfigPath);
   assign(badLines, badConfigPath);
 
-  while (!_kbhit()) {
+  while (!_kbhit() && (limited ? logCount-- : true)) {
     bool current = randomBool();
     std::cout << color << "[ " << (current ? GREEN +  " OK " + color: RED + "FAIL" + color) << " ] " << (current ? goodLines[getRandom(0, goodLines.size())] : badLines[getRandom(0, badLines.size())]) << std::endl;
     sleep_ns(microSecs);
