@@ -119,6 +119,7 @@ int main(int argc, char* argv[]) {
   const std::string badConfigPath = getConfigPath() + "/randLog/bad";
   unsigned long long microSecs = 500000000;
   bool limited = false;
+  bool quitOnPress = false;
   long long logCount = 1;
 
   for (int i = 1; i < argc; i++) {
@@ -138,6 +139,7 @@ int main(int argc, char* argv[]) {
       std::cout << "\t-c, --color: Color of output" << std::endl;
       std::cout << "\t-v, --version: Print version" << std::endl;
       std::cout << "\t-n, --count: Number of logs" << std::endl;
+      std::cout << "\t-s, --stop: Stop on a keypress" << std::endl;
       return 0;
     } else if (param == "-v" || param == "--version") {
       std::cout << "randLog v1.0" << std::endl;
@@ -151,6 +153,8 @@ int main(int argc, char* argv[]) {
         return PARAM_ERR;
       } 
       i++;
+    } else if (param == "-s" || param == "--stop") {
+      quitOnPress = true;
     } else {
       std::cerr << "Unknown option: " << param << std::endl;
       return PARAM_ERR;
@@ -161,7 +165,7 @@ int main(int argc, char* argv[]) {
   assign(goodLines, goodConfigPath);
   assign(badLines, badConfigPath);
 
-  while (!_kbhit() && (limited ? logCount-- : true)) {
+  while ((quitOnPress ? !_kbhit() : true) && (limited ? logCount-- : true)) {
     bool current = randomBool();
     std::cout << color << "[ " << (current ? GREEN +  " OK " + color: RED + "FAIL" + color) << " ] " << (current ? goodLines[getRandom(0, goodLines.size())] : badLines[getRandom(0, badLines.size())]) << std::endl;
     sleep_ns(microSecs);
