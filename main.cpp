@@ -1,37 +1,35 @@
-#include <iostream>
 #include <fstream>
+#include <iostream>
 #include <string>
 #include <vector>
 
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/select.h>
-#include <sys/ioctl.h>
-#include <termios.h>
 #include <pwd.h>
+#include <sys/ioctl.h>
+#include <sys/select.h>
+#include <sys/types.h>
+#include <termios.h>
 #include <time.h>
+#include <unistd.h>
 
-
-#define FILE_ERR  1
+#define FILE_ERR 1
 #define PARAM_ERR 2
 
-#define RESET   std::string("\033[0m")
+#define RESET std::string("\033[0m")
 #define DEFAULT std::string("\033[39m")
-#define BLACK   std::string("\033[30m")
-#define RED     std::string("\033[31m")
-#define GREEN   std::string("\033[32m")
-#define YELLOW  std::string("\033[33m")
-#define BLUE    std::string("\033[34m")
+#define BLACK std::string("\033[30m")
+#define RED std::string("\033[31m")
+#define GREEN std::string("\033[32m")
+#define YELLOW std::string("\033[33m")
+#define BLUE std::string("\033[34m")
 #define MAGENTA std::string("\033[35m")
-#define CYAN    std::string("\033[36m")
-#define WHITE   std::string("\033[37m")
-
+#define CYAN std::string("\033[36m")
+#define WHITE std::string("\033[37m")
 
 int _kbhit() {
   static const int STDIN = 0;
   static bool initialized = false;
 
-  if (! initialized) {
+  if (!initialized) {
     termios term;
     tcgetattr(STDIN, &term);
     term.c_lflag &= ~ICANON;
@@ -45,13 +43,12 @@ int _kbhit() {
   return bytesWaiting;
 }
 
-
 std::string getConfigPath() {
   struct passwd *pw = getpwuid(getuid());
   return std::string(pw->pw_dir) + "/.config";
 }
 
-void assign(std::vector<std::string>& lines, const std::string& filePath) {
+void assign(std::vector<std::string> &lines, const std::string &filePath) {
   std::fstream file(filePath);
   std::string buffer;
   if (!file.is_open()) {
@@ -63,7 +60,7 @@ void assign(std::vector<std::string>& lines, const std::string& filePath) {
   }
 }
 
-std::string parseColor(const std::string& colorName) {
+std::string parseColor(const std::string &colorName) {
   if (colorName == "default") {
     return DEFAULT;
   } else if (colorName == "black") {
@@ -109,7 +106,7 @@ void sleep_ns(unsigned long long ns) {
   }
 }
 
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[]) {
   srand((unsigned int)time(NULL) + (unsigned int)clock());
 
   std::vector<std::string> goodLines;
@@ -130,10 +127,11 @@ int main(int argc, char* argv[]) {
       else {
         std::cerr << "-c(--color) option requires a parameter" << std::endl;
         return PARAM_ERR;
-      } 
+      }
       i++;
     } else if (param == "-h" || param == "--help") {
-      std::cout << "randLog: a program to output random/fake log output" << std::endl;
+      std::cout << "randLog: a program to output random/fake log output"
+                << std::endl;
       std::cout << "OPTIONS: " << std::endl;
       std::cout << "\t-h, --help: Output this text" << std::endl;
       std::cout << "\t-c, --color: Color of output" << std::endl;
@@ -151,7 +149,7 @@ int main(int argc, char* argv[]) {
       } else {
         std::cerr << "-n(--count) option requires a parameter" << std::endl;
         return PARAM_ERR;
-      } 
+      }
       i++;
     } else if (param == "-s" || param == "--stop") {
       quitOnPress = true;
@@ -161,16 +159,19 @@ int main(int argc, char* argv[]) {
     }
   }
 
-
   assign(goodLines, goodConfigPath);
   assign(badLines, badConfigPath);
 
   while ((quitOnPress ? !_kbhit() : true) && (limited ? logCount-- : true)) {
     bool current = randomBool();
-    std::cout << color << "[ " << (current ? GREEN +  " OK " + color: RED + "FAIL" + color) << " ] " << (current ? goodLines[getRandom(0, goodLines.size())] : badLines[getRandom(0, badLines.size())]) << std::endl;
+    std::cout << color << "[ "
+              << (current ? GREEN + " OK " + color : RED + "FAIL" + color)
+              << " ] "
+              << (current ? goodLines[getRandom(0, goodLines.size())]
+                          : badLines[getRandom(0, badLines.size())])
+              << std::endl;
     sleep_ns(microSecs);
   }
 
   return 0;
 }
-
